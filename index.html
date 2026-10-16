@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareFlow Radar™ — Clinical Patient-Flow & Bottleneck Intelligence</title>
+  <meta name="description" content="Hospital AI/ML operational intelligence platform answering: What is likely to get delayed next, why, and what should ops examine?">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Sticky Application Header -->
+  <header class="app-header">
+    <div class="brand-section">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <!-- Medical Cross + Pulse Combined -->
+          <path d="M12 3v18M3 12h18" stroke-opacity="0.35" stroke-linecap="round"/>
+          <path d="M3 12h3l3-7 4 14 3-7h5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="brand-title">
+        <h1>CareFlow Radar<span class="brand-dot">.ai</span></h1>
+        <p><span class="pulse-dot"></span> Clinical Command Center &bull; Patient-Flow Intelligence</p>
+      </div>
+    </div>
+
+    <div class="header-badges">
+      <span class="badge badge-emerald">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        ML Engine: From Scratch (NumPy)
+      </span>
+      <span class="badge badge-cyan">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Time-Aware Split Validated
+      </span>
+      <span class="badge badge-amber">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Track: The Forgotten Patient
+      </span>
+      <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Clinical Day Shift / ICU Night Mode">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <span>ICU Night Monitor</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="nav-tabs" id="main-nav">
+    <button class="tab-btn active" data-tab="tab-overview" id="nav-btn-overview">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Overview & Hospital Wards
+    </button>
+    <button class="tab-btn" data-tab="tab-investigate" id="nav-btn-investigate">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      "Investigate First" Action Engine
+    </button>
+    <button class="tab-btn" data-tab="tab-diagnostics" id="nav-btn-diagnostics">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Diagnostic TAT & "Forgotten Patient"
+    </button>
+    <button class="tab-btn" data-tab="tab-ml" id="nav-btn-ml">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      ML Performance & Feature Signals
+    </button>
+    <button class="tab-btn" data-tab="tab-simulator" id="nav-btn-simulator">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      "What-If" Operational Sandbox
+    </button>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="app-container">
+
+    <!-- KPI Ribbon -->
+    <section class="kpi-ribbon">
+      <div class="kpi-card cyan">
+        <div class="kpi-header">
+          <span class="kpi-title">Visits Monitored</span>
+          <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="kpi-value">8,000</div>
+        <div class="kpi-footer">Across <span class="highlight">12 Hospital Wards</span> & 2,000 Patients</div>
+      </div>
+
+      <div class="kpi-card emerald">
+        <div class="kpi-header">
+          <span class="kpi-title">Model Wait MAE</span>
+          <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <div class="kpi-value" id="kpi-mae">13.97<span style="font-size:1.1rem">m</span></div>
+        <div class="kpi-footer"><span class="highlight">30.4% Improvement</span> vs 20.07m Global Baseline</div>
+      </div>
+
+      <div class="kpi-card crimson">
+        <div class="kpi-header">
+          <span class="kpi-title">Severe Delay Rate</span>
+          <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="kpi-value">31.2%</div>
+        <div class="kpi-footer">Visits breaching >60m wait or >3hr journey</div>
+      </div>
+
+      <div class="kpi-card amber">
+        <div class="kpi-header">
+          <span class="kpi-title">"Forgotten Patient" Lag</span>
+          <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+        </div>
+        <div class="kpi-value">50.4%</div>
+        <div class="kpi-footer">Diagnostic tests complete <span class="highlight">after doctor visit ends</span></div>
+      </div>
+
+      <div class="kpi-card indigo">
+        <div class="kpi-header">
+          <span class="kpi-title">Top Bottleneck Unit</span>
+          <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div class="kpi-value" style="font-size:1.55rem">Pediatrics</div>
+        <div class="kpi-footer">Avg Wait: <span class="highlight">60.8m</span> (Staff/Bed strain)</div>
+      </div>
+    </section>
+
+    <!-- Urgent Proactive Alert Banner -->
+    <div class="urgent-banner">
+      <div class="urgent-content">
+        <span class="urgent-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Emergency Dispatch Alert
+        </span>
+        <div class="urgent-text">
+          <strong>Immediate Queue Saturation Detected in Pediatrics (Ward D03) & Laboratory (Ward D07)</strong>
+          <p>Concurrence of 8 walk-in arrivals + 5 pending lab/imaging tests projected to increase wait time by +38 minutes over the next 60 minutes.</p>
+        </div>
+      </div>
+      <button class="btn-action" onclick="switchTab('tab-investigate')">
+        <span>Examine Action Queue</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </div>
+
+    <!-- TAB 1: OVERVIEW & HOSPITAL WARDS -->
+    <div id="tab-overview" class="tab-pane active">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <h2>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--hospital-teal)" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              Hospital Department Operational Health & Queue Matrix
+            </h2>
+            <p>12 hospital units linked across nurse staffing, bed inventory, live queues, and delay probabilities.</p>
+          </div>
+          <div>
+            <input type="text" id="dept-search" class="clinical-input" placeholder="Search ward or service...">
+          </div>
+        </div>
+
+        <div class="dept-grid" id="department-cards-container">
+          <!-- Dynamically populated by JS -->
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <h2>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              24-Hour Patient Arrival Volume & Severe Delay Waves
+            </h2>
+            <p>Correlating hourly arrivals with wait spikes to detect operational clinical shift vulnerabilities.</p>
+          </div>
+        </div>
+        <div class="chart-container" id="hourly-chart-container">
+          <!-- Dynamically drawn SVG chart -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: INVESTIGATE FIRST ACTION ENGINE -->
+    <div id="tab-investigate" class="tab-pane" style="display:none;">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <h2>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--status-critical)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              "What Should We Investigate First?" Action Queue
+            </h2>
+            <p>Ranked strictly by <strong>Impact Score = Delay Probability &times; (Queue Depth + Vulnerability Risk)</strong> to resolve clinical bottlenecks.</p>
+          </div>
+          <div style="display:flex; gap:0.5rem;">
+            <select id="filter-priority" class="clinical-select">
+              <option value="all">All Triage Risk Levels</option>
+              <option value="critical">Critical Impact (&gt;7.0)</option>
+              <option value="high">High Impact (5.0 - 7.0)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Priority Rank</th>
+                <th>Encounter & Patient</th>
+                <th>Hospital Ward</th>
+                <th>Triage Severity</th>
+                <th>Pred. Wait</th>
+                <th>P(Severe Delay)</th>
+                <th>Impact Score</th>
+                <th>Root-Cause Driver</th>
+                <th>What Operations Should Examine</th>
+              </tr>
+            </thead>
+            <tbody id="investigation-table-body">
+              <!-- Dynamically populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: DIAGNOSTIC TAT & THE FORGOTTEN PATIENT -->
+    <div id="tab-diagnostics" class="tab-pane" style="display:none;">
+      <div class="grid-2col">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h2>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--hospital-blue)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Diagnostic Test Turnaround Monitor
+              </h2>
+              <p>5,000 tests across 6 diagnostic modalities tracked against hospital operational SLAs.</p>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Modality</th>
+                  <th>Total Tests</th>
+                  <th>Avg Turnaround</th>
+                  <th>Urgent TAT</th>
+                  <th>Routine TAT</th>
+                  <th>SLA Breach Rate</th>
+                </tr>
+              </thead>
+              <tbody id="diagnostic-tat-body">
+                <!-- Dynamically populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h2>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--hospital-teal)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+                "The Forgotten Patient" Phenomenon
+              </h2>
+              <p>Uncovering the hidden clinical bottleneck where 50.4% of patients remain stranded post-consultation.</p>
+            </div>
+          </div>
+          
+          <div style="background:var(--hospital-blue-light); padding:1.25rem; border-radius:12px; margin-bottom:1.25rem; border-left:4px solid var(--accent-cyan);">
+            <h3 style="font-size:0.95rem; color:var(--text-heading); margin-bottom:0.4rem; font-weight:700;">The Broken Link in Patient Flow</h3>
+            <p style="font-size:0.83rem; color:var(--text-main); line-height:1.6;">
+              When hospital departments operate in clinical silos, consultations finish but patients cannot be discharged or admitted because diagnostic test results (especially blood tests and MRI scans) have not completed turnaround.
+            </p>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+            <div style="background:var(--bg-card-subtle); padding:1.1rem; border-radius:10px; border:1px solid var(--border-subtle);">
+              <div style="font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; font-weight:600;">Average Post-Service Lag</div>
+              <div style="font-size:1.75rem; font-weight:800; color:var(--accent-cyan); margin:0.25rem 0;">52.2 mins</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Stranded waiting for discharge/test results</div>
+            </div>
+            <div style="background:var(--bg-card-subtle); padding:1.1rem; border-radius:10px; border:1px solid var(--border-subtle);">
+              <div style="font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; font-weight:600;">Delayed Test Completions</div>
+              <div style="font-size:1.75rem; font-weight:800; color:var(--status-critical); margin:0.25rem 0;">2,519 Tests</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);">Finished after doctor consultation concluded</div>
+            </div>
+          </div>
+
+          <div style="margin-top:1.25rem; padding:1.1rem; background:var(--hospital-teal-light); border-radius:10px; border:1px solid rgba(13,148,136,0.3);">
+            <div style="font-size:0.82rem; font-weight:700; color:var(--hospital-teal); margin-bottom:0.3rem;">Operational Clinical Prescription</div>
+            <p style="font-size:0.82rem; color:var(--text-main); line-height:1.5;">
+              Implement bidirectional clinical alerting: trigger discharge pre-clearance the moment diagnostic tests are marked "processing" rather than waiting for post-consultation discharge review.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: ML PERFORMANCE & FEATURE SIGNALS -->
+    <div id="tab-ml" class="tab-pane" style="display:none;">
+      <div class="grid-2col">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h2>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--status-success)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                From-Scratch ML vs Baselines
+              </h2>
+              <p>Strict Time-Aware Train/Test Split (Train: Jan–Oct | Test: Oct–Dec 2025). Zero future leakage.</p>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Model / Baseline</th>
+                  <th>MAE (Minutes)</th>
+                  <th>RMSE</th>
+                  <th>R&sup2; Score</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="ml-benchmark-body">
+                <!-- Dynamically populated by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <div style="margin-top:1.25rem; padding:1.1rem; background:var(--status-success-bg); border-radius:10px; border:1px solid var(--status-success-border);">
+            <div style="font-size:0.82rem; font-weight:700; color:var(--status-success); margin-bottom:0.25rem;">Classifier Evaluation (Severe Delay)</div>
+            <p style="font-size:0.82rem; color:var(--text-main);">
+              Accuracy: <strong>73.0%</strong> | Precision: <strong>75.2%</strong> | Recall: <strong>65.7%</strong> | F1-Score: <strong>0.701</strong> | ROC-AUC: <strong>0.784</strong>.
+            </p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h2>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--hospital-blue)" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                Top Operational Feature Attributions (Why Delays Occur)
+              </h2>
+              <p>Standardized mathematical feature weights from Ridge & GBDT ensembles.</p>
+            </div>
+          </div>
+          <div class="feature-list" id="feature-attributions-container">
+            <!-- Dynamically populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: WHAT-IF OPERATIONAL SANDBOX -->
+    <div id="tab-simulator" class="tab-pane" style="display:none;">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <h2>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--hospital-teal)" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              "What-If" Hospital Ward Resource Simulator
+            </h2>
+            <p>Empowering hospital charge nurses & bed managers to test nurse reallocations and observe immediate predicted wait reductions.</p>
+          </div>
+        </div>
+
+        <div class="simulator-grid">
+          <div class="sim-controls">
+            <div class="slider-group">
+              <div class="slider-header">
+                <span>Select Target Hospital Ward</span>
+              </div>
+              <select id="sim-dept-select" class="clinical-select" style="width:100%; padding:0.65rem; margin-bottom:1rem; font-size:0.86rem;">
+                <option value="D03">Pediatrics (Ward D03 &bull; Avg Wait: 60.8m, Staff: 16)</option>
+                <option value="D07">Laboratory (Ward D07 &bull; Avg Wait: 60.6m, Staff: 27)</option>
+                <option value="D11">Outpatient (Ward D11 &bull; Avg Wait: 57.8m, Staff: 16)</option>
+                <option value="D10">Neurology (Ward D10 &bull; Avg Wait: 56.1m, Staff: 12)</option>
+                <option value="D02">General Medicine (Ward D02 &bull; Avg Wait: 55.2m, Staff: 30)</option>
+                <option value="D01">Emergency (Ward D01 &bull; Avg Wait: 48.7m, Staff: 28)</option>
+              </select>
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-header">
+                <span>Add Float-Pool Nursing Staff (+N Nurses)</span>
+                <span class="slider-val" id="val-staff">+0 Nurses</span>
+              </div>
+              <input type="range" id="slider-staff" min="0" max="8" value="0" step="1">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-header">
+                <span>Diagnostic Lab/Imaging Turnaround Acceleration</span>
+                <span class="slider-val" id="val-tat">Standard TAT</span>
+              </div>
+              <input type="range" id="slider-tat" min="0" max="50" value="0" step="10">
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-header">
+                <span>Low-Triage Clinical Fast-Track Protocol</span>
+                <span class="slider-val" id="val-fasttrack">Off</span>
+              </div>
+              <input type="range" id="slider-fasttrack" min="0" max="1" value="0" step="1">
+            </div>
+          </div>
+
+          <div class="sim-output-card">
+            <div style="font-size:0.8rem; color:var(--hospital-teal); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.6rem; font-weight:700;">Counterfactual ML Projection</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem;">
+              <div>
+                <div style="font-size:0.75rem; color:var(--text-dim); font-weight:600;">Current Predicted Wait</div>
+                <div style="font-size:2.3rem; font-weight:800; color:var(--status-critical);" id="sim-current-wait">60.8m</div>
+              </div>
+              <div>
+                <div style="font-size:0.75rem; color:var(--text-dim); font-weight:600;">Simulated Wait After Intervention</div>
+                <div style="font-size:2.3rem; font-weight:800; color:var(--status-success);" id="sim-projected-wait">60.8m</div>
+              </div>
+            </div>
+
+            <div style="background:var(--bg-card-subtle); padding:1rem 1.25rem; border-radius:10px; margin-bottom:1rem; border:1px solid var(--border-subtle);">
+              <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.35rem;">
+                <span style="color:var(--text-muted);">Projected Queue Delay Reduction:</span>
+                <span style="color:var(--status-success); font-weight:800;" id="sim-delta">0.0 mins (0%)</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
+                <span style="color:var(--text-muted);">Severe Delay Probability Drop:</span>
+                <span style="color:var(--status-success); font-weight:800;" id="sim-prob-drop">0.0%</span>
+              </div>
+            </div>
+
+            <p style="font-size:0.78rem; color:var(--text-dim); line-height:1.5;">
+              Simulated using multi-variate Ridge feature sensitivities and empirical queue arrival dynamics. Prescriptions take immediate effect on ward shift staffing.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
