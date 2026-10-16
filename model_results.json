@@ -1,0 +1,755 @@
+{
+  "metadata": {
+    "title": "CareFlow Radar - Hospital Flow ML Engine",
+    "evaluated_at": "2026-10-16T11:06:50.865430",
+    "time_aware_split_date": "2025-10-18 13:38:00",
+    "train_size": 6400,
+    "test_size": 1600,
+    "total_visits": 8000
+  },
+  "model_performance": {
+    "baseline_global_mean": {
+      "mae": 20.07,
+      "rmse": 24.74,
+      "r2": 0.0
+    },
+    "baseline_triage_only": {
+      "mae": 14.42,
+      "rmse": 18.08,
+      "r2": 0.4661
+    },
+    "ridge_regressor_from_scratch": {
+      "mae": 13.97,
+      "rmse": 17.67,
+      "r2": 0.4902
+    },
+    "gbdt_ensemble_from_scratch": {
+      "mae": 16.04,
+      "rmse": 20.17,
+      "r2": 0.3358
+    },
+    "delay_classifier": {
+      "accuracy": 73.0,
+      "precision": 75.2,
+      "recall": 65.7,
+      "f1_score": 0.701,
+      "roc_auc": 0.784
+    }
+  },
+  "feature_attributions": [
+    {
+      "feature": "triage_level_Low",
+      "weight": 25.798,
+      "importance_pct": 41.4
+    },
+    {
+      "feature": "triage_level_Medium",
+      "weight": 15.473,
+      "importance_pct": 24.8
+    },
+    {
+      "feature": "triage_level_High",
+      "weight": 3.596,
+      "importance_pct": 5.8
+    },
+    {
+      "feature": "service_type_Diagnostics",
+      "weight": 2.276,
+      "importance_pct": 3.6
+    },
+    {
+      "feature": "service_type_Outpatient",
+      "weight": 2.071,
+      "importance_pct": 3.3
+    },
+    {
+      "feature": "bed_count",
+      "weight": -1.686,
+      "importance_pct": 2.7
+    },
+    {
+      "feature": "daily_capacity",
+      "weight": -1.583,
+      "importance_pct": 2.5
+    },
+    {
+      "feature": "service_type_Support",
+      "weight": -1.369,
+      "importance_pct": 2.2
+    }
+  ],
+  "department_kpis": [
+    {
+      "department_id": "D03",
+      "department_name": "Pediatrics",
+      "service_type": "Clinical",
+      "staff_count": 16,
+      "bed_count": 11,
+      "daily_capacity": 368,
+      "avg_wait_minutes": 60.8,
+      "avg_journey_minutes": 160.7,
+      "post_service_lag_avg": 52.6,
+      "severe_delay_rate": 60.9,
+      "total_visits": 657
+    },
+    {
+      "department_id": "D07",
+      "department_name": "Laboratory",
+      "service_type": "Diagnostics",
+      "staff_count": 27,
+      "bed_count": 55,
+      "daily_capacity": 156,
+      "avg_wait_minutes": 60.6,
+      "avg_journey_minutes": 158.7,
+      "post_service_lag_avg": 51.2,
+      "severe_delay_rate": 59.2,
+      "total_visits": 659
+    },
+    {
+      "department_id": "D11",
+      "department_name": "Outpatient",
+      "service_type": "Outpatient",
+      "staff_count": 16,
+      "bed_count": 48,
+      "daily_capacity": 215,
+      "avg_wait_minutes": 57.8,
+      "avg_journey_minutes": 155.0,
+      "post_service_lag_avg": 49.9,
+      "severe_delay_rate": 55.6,
+      "total_visits": 629
+    },
+    {
+      "department_id": "D10",
+      "department_name": "Neurology",
+      "service_type": "Clinical",
+      "staff_count": 12,
+      "bed_count": 25,
+      "daily_capacity": 216,
+      "avg_wait_minutes": 56.1,
+      "avg_journey_minutes": 155.5,
+      "post_service_lag_avg": 52.5,
+      "severe_delay_rate": 53.8,
+      "total_visits": 664
+    },
+    {
+      "department_id": "D02",
+      "department_name": "General Medicine",
+      "service_type": "Clinical",
+      "staff_count": 30,
+      "bed_count": 48,
+      "daily_capacity": 298,
+      "avg_wait_minutes": 55.2,
+      "avg_journey_minutes": 157.6,
+      "post_service_lag_avg": 52.2,
+      "severe_delay_rate": 52.6,
+      "total_visits": 666
+    },
+    {
+      "department_id": "D06",
+      "department_name": "Radiology",
+      "service_type": "Diagnostics",
+      "staff_count": 7,
+      "bed_count": 54,
+      "daily_capacity": 153,
+      "avg_wait_minutes": 54.8,
+      "avg_journey_minutes": 156.2,
+      "post_service_lag_avg": 53.8,
+      "severe_delay_rate": 50.3,
+      "total_visits": 658
+    },
+    {
+      "department_id": "D05",
+      "department_name": "Orthopedics",
+      "service_type": "Clinical",
+      "staff_count": 9,
+      "bed_count": 48,
+      "daily_capacity": 243,
+      "avg_wait_minutes": 49.4,
+      "avg_journey_minutes": 148.5,
+      "post_service_lag_avg": 52.6,
+      "severe_delay_rate": 41.8,
+      "total_visits": 629
+    },
+    {
+      "department_id": "D01",
+      "department_name": "Emergency",
+      "service_type": "Emergency",
+      "staff_count": 28,
+      "bed_count": 29,
+      "daily_capacity": 431,
+      "avg_wait_minutes": 48.7,
+      "avg_journey_minutes": 146.2,
+      "post_service_lag_avg": 51.8,
+      "severe_delay_rate": 40.2,
+      "total_visits": 709
+    },
+    {
+      "department_id": "D09",
+      "department_name": "Surgery",
+      "service_type": "Clinical",
+      "staff_count": 5,
+      "bed_count": 17,
+      "daily_capacity": 181,
+      "avg_wait_minutes": 47.7,
+      "avg_journey_minutes": 149.6,
+      "post_service_lag_avg": 51.7,
+      "severe_delay_rate": 40.6,
+      "total_visits": 677
+    },
+    {
+      "department_id": "D04",
+      "department_name": "Cardiology",
+      "service_type": "Clinical",
+      "staff_count": 25,
+      "bed_count": 22,
+      "daily_capacity": 394,
+      "avg_wait_minutes": 44.8,
+      "avg_journey_minutes": 145.0,
+      "post_service_lag_avg": 53.1,
+      "severe_delay_rate": 37.3,
+      "total_visits": 663
+    },
+    {
+      "department_id": "D08",
+      "department_name": "Pharmacy",
+      "service_type": "Support",
+      "staff_count": 20,
+      "bed_count": 26,
+      "daily_capacity": 445,
+      "avg_wait_minutes": 44.6,
+      "avg_journey_minutes": 145.6,
+      "post_service_lag_avg": 52.0,
+      "severe_delay_rate": 38.6,
+      "total_visits": 687
+    },
+    {
+      "department_id": "D12",
+      "department_name": "Admissions",
+      "service_type": "Admin",
+      "staff_count": 5,
+      "bed_count": 50,
+      "daily_capacity": 438,
+      "avg_wait_minutes": 44.6,
+      "avg_journey_minutes": 145.9,
+      "post_service_lag_avg": 53.2,
+      "severe_delay_rate": 39.6,
+      "total_visits": 702
+    }
+  ],
+  "investigation_queue": [
+    {
+      "encounter_id": "E006172",
+      "patient_id": "P01658",
+      "department_id": "D05",
+      "department_name": "Orthopedics",
+      "arrival_time": "2025-12-31 12:23:00",
+      "triage_level": "Low",
+      "visit_type": "Walk-in",
+      "age": 84,
+      "chronic_condition": "nan",
+      "predicted_wait_min": 70.9,
+      "delay_probability": 0.77,
+      "impact_score": 6.2,
+      "root_cause": "Low Triage Starvation (Delayed by higher severity cases)",
+      "recommended_action": "Fast-track simple protocol to prevent 70+ min drift.",
+      "total_tests": 1
+    },
+    {
+      "encounter_id": "E005976",
+      "patient_id": "P00689",
+      "department_id": "D05",
+      "department_name": "Orthopedics",
+      "arrival_time": "2025-12-31 14:06:00",
+      "triage_level": "Low",
+      "visit_type": "Walk-in",
+      "age": 43,
+      "chronic_condition": "Hypertension",
+      "predicted_wait_min": 70.6,
+      "delay_probability": 0.76,
+      "impact_score": 4.5,
+      "root_cause": "Low Triage Starvation (Delayed by higher severity cases)",
+      "recommended_action": "Fast-track simple protocol to prevent 70+ min drift.",
+      "total_tests": 1
+    },
+    {
+      "encounter_id": "E000001",
+      "patient_id": "P01843",
+      "department_id": "D09",
+      "department_name": "Surgery",
+      "arrival_time": "2025-12-30 17:19:00",
+      "triage_level": "Low",
+      "visit_type": "Walk-in",
+      "age": 78,
+      "chronic_condition": "nan",
+      "predicted_wait_min": 74.3,
+      "delay_probability": 0.81,
+      "impact_score": 3.2,
+      "root_cause": "Low Triage Starvation (Delayed by higher severity cases)",
+      "recommended_action": "Fast-track simple protocol to prevent 70+ min drift.",
+      "total_tests": 0
+    },
+    {
+      "encounter_id": "E002966",
+      "patient_id": "P00529",
+      "department_id": "D02",
+      "department_name": "General Medicine",
+      "arrival_time": "2025-12-31 15:45:00",
+      "triage_level": "Low",
+      "visit_type": "Scheduled",
+      "age": 87,
+      "chronic_condition": "Cardiac",
+      "predicted_wait_min": 73.1,
+      "delay_probability": 0.8,
+      "impact_score": 3.2,
+      "root_cause": "Diagnostic Lag (2 tests requested; TAT ~36m)",
+      "recommended_action": "Expedite lab/imaging batch reading; place on priority alert.",
+      "total_tests": 2
+    },
+    {
+      "encounter_id": "E002933",
+      "patient_id": "P01708",
+      "department_id": "D07",
+      "department_name": "Laboratory",
+      "arrival_time": "2025-12-30 06:05:00",
+      "triage_level": "Low",
+      "visit_type": "Walk-in",
+      "age": 87,
+      "chronic_condition": "Diabetes",
+      "predicted_wait_min": 79.2,
+      "delay_probability": 0.84,
+      "impact_score": 2.5,
+      "root_cause": "Low Triage Starvation (Delayed by higher severity cases)",
+      "recommended_action": "Fast-track simple protocol to prevent 70+ min drift.",
+      "total_tests": 0
+    },
+    {
+      "encounter_id": "E002237",
+      "patient_id": "P00751",
+      "department_id": "D09",
+      "department_name": "Surgery",
+      "arrival_time": "2025-12-30 09:05:00",
+      "triage_level": "Low",
+      "visit_type": "Walk-in",
+      "age": 92,
+      "chronic_condition": "nan",
+      "predicted_wait_min": 75.2,
+      "delay_probability": 0.81,
+      "impact_score": 2.4,
+      "root_cause": "Low Triage Starvation (Delayed by higher severity cases)",
+      "recommended_action": "Fast-track simple protocol to prevent 70+ min drift.",
+      "total_tests": 0
+    },
+    {
+      "encounter_id": "E003815",
+      "patient_id": "P01082",
+      "department_id": "D09",
+      "department_name": "Surgery",
+      "arrival_time": "2025-12-31 22:15:00",
+      "triage_level": "Low",
+      "visit_type": "Scheduled",
+      "age": 94,
+      "chronic_condition": "nan",
+      "predicted_wait_min": 72.0,
+      "delay_probability": 0.78,
+      "impact_score": 2.3,
+      "root_cause": "Low Triage Starvation (Delayed by higher severity cases)",
+      "recommended_action": "Fast-track simple protocol to prevent 70+ min drift.",
+      "total_tests": 0
+    },
+    {
+      "encounter_id": "E005505",
+      "patient_id": "P01303",
+      "department_id": "D05",
+      "department_name": "Orthopedics",
+      "arrival_time": "2025-12-31 10:37:00",
+      "triage_level": "Low",
+      "visit_type": "Scheduled",
+      "age": 67,
+      "chronic_condition": "Other",
+      "predicted_wait_min": 69.2,
+      "delay_probability": 0.75,
+      "impact_score": 2.2,
+      "root_cause": "Low Triage Starvation (Delayed by higher severity cases)",
+      "recommended_action": "Fast-track simple protocol to prevent 70+ min drift.",
+      "total_tests": 0
+    },
+    {
+      "encounter_id": "E005750",
+      "patient_id": "P00837",
+      "department_id": "D01",
+      "department_name": "Emergency",
+      "arrival_time": "2025-12-30 09:41:00",
+      "triage_level": "Low",
+      "visit_type": "Scheduled",
+      "age": 77,
+      "chronic_condition": "Hypertension",
+      "predicted_wait_min": 67.8,
+      "delay_probability": 0.68,
+      "impact_score": 2.0,
+      "root_cause": "Low Triage Starvation (Delayed by higher severity cases)",
+      "recommended_action": "Fast-track simple protocol to prevent 70+ min drift.",
+      "total_tests": 1
+    },
+    {
+      "encounter_id": "E003829",
+      "patient_id": "P01879",
+      "department_id": "D01",
+      "department_name": "Emergency",
+      "arrival_time": "2025-12-30 21:41:00",
+      "triage_level": "Low",
+      "visit_type": "Scheduled",
+      "age": 70,
+      "chronic_condition": "Diabetes",
+      "predicted_wait_min": 67.4,
+      "delay_probability": 0.67,
+      "impact_score": 2.0,
+      "root_cause": "Low Triage Starvation (Delayed by higher severity cases)",
+      "recommended_action": "Fast-track simple protocol to prevent 70+ min drift.",
+      "total_tests": 0
+    },
+    {
+      "encounter_id": "E007876",
+      "patient_id": "P01155",
+      "department_id": "D02",
+      "department_name": "General Medicine",
+      "arrival_time": "2025-12-31 15:42:00",
+      "triage_level": "Medium",
+      "visit_type": "Walk-in",
+      "age": 29,
+      "chronic_condition": "Hypertension",
+      "predicted_wait_min": 49.7,
+      "delay_probability": 0.44,
+      "impact_score": 1.8,
+      "root_cause": "Staffing Capacity Ceiling Reached",
+      "recommended_action": "Coordinate with bed manager for accelerated discharge.",
+      "total_tests": 1
+    },
+    {
+      "encounter_id": "E004070",
+      "patient_id": "P01167",
+      "department_id": "D06",
+      "department_name": "Radiology",
+      "arrival_time": "2025-12-31 19:19:00",
+      "triage_level": "Medium",
+      "visit_type": "Walk-in",
+      "age": 3,
+      "chronic_condition": "nan",
+      "predicted_wait_min": 53.2,
+      "delay_probability": 0.44,
+      "impact_score": 1.8,
+      "root_cause": "Diagnostic Lag (2 tests requested; TAT ~101m)",
+      "recommended_action": "Expedite lab/imaging batch reading; place on priority alert.",
+      "total_tests": 2
+    },
+    {
+      "encounter_id": "E007455",
+      "patient_id": "P01040",
+      "department_id": "D05",
+      "department_name": "Orthopedics",
+      "arrival_time": "2025-12-31 13:41:00",
+      "triage_level": "Medium",
+      "visit_type": "Walk-in",
+      "age": 79,
+      "chronic_condition": "Cardiac",
+      "predicted_wait_min": 47.3,
+      "delay_probability": 0.38,
+      "impact_score": 1.5,
+      "root_cause": "Staffing Capacity Ceiling Reached",
+      "recommended_action": "Coordinate with bed manager for accelerated discharge.",
+      "total_tests": 0
+    },
+    {
+      "encounter_id": "E007024",
+      "patient_id": "P01204",
+      "department_id": "D05",
+      "department_name": "Orthopedics",
+      "arrival_time": "2025-12-31 02:25:00",
+      "triage_level": "Medium",
+      "visit_type": "Walk-in",
+      "age": 73,
+      "chronic_condition": "Hypertension",
+      "predicted_wait_min": 47.3,
+      "delay_probability": 0.36,
+      "impact_score": 1.4,
+      "root_cause": "Staffing Capacity Ceiling Reached",
+      "recommended_action": "Coordinate with bed manager for accelerated discharge.",
+      "total_tests": 0
+    },
+    {
+      "encounter_id": "E004833",
+      "patient_id": "P01589",
+      "department_id": "D04",
+      "department_name": "Cardiology",
+      "arrival_time": "2025-12-30 07:53:00",
+      "triage_level": "Medium",
+      "visit_type": "Walk-in",
+      "age": 82,
+      "chronic_condition": "Hypertension",
+      "predicted_wait_min": 49.7,
+      "delay_probability": 0.39,
+      "impact_score": 1.2,
+      "root_cause": "Diagnostic Lag (2 tests requested; TAT ~76m)",
+      "recommended_action": "Expedite lab/imaging batch reading; place on priority alert.",
+      "total_tests": 2
+    },
+    {
+      "encounter_id": "E002454",
+      "patient_id": "P01275",
+      "department_id": "D05",
+      "department_name": "Orthopedics",
+      "arrival_time": "2025-12-31 00:19:00",
+      "triage_level": "Medium",
+      "visit_type": "Scheduled",
+      "age": 73,
+      "chronic_condition": "nan",
+      "predicted_wait_min": 46.3,
+      "delay_probability": 0.32,
+      "impact_score": 1.0,
+      "root_cause": "Staffing Capacity Ceiling Reached",
+      "recommended_action": "Coordinate with bed manager for accelerated discharge.",
+      "total_tests": 0
+    },
+    {
+      "encounter_id": "E004872",
+      "patient_id": "P01548",
+      "department_id": "D08",
+      "department_name": "Pharmacy",
+      "arrival_time": "2025-12-30 15:14:00",
+      "triage_level": "Medium",
+      "visit_type": "Walk-in",
+      "age": 81,
+      "chronic_condition": "nan",
+      "predicted_wait_min": 43.5,
+      "delay_probability": 0.3,
+      "impact_score": 0.9,
+      "root_cause": "Staffing Capacity Ceiling Reached",
+      "recommended_action": "Coordinate with bed manager for accelerated discharge.",
+      "total_tests": 0
+    },
+    {
+      "encounter_id": "E007724",
+      "patient_id": "P01764",
+      "department_id": "D07",
+      "department_name": "Laboratory",
+      "arrival_time": "2025-12-30 07:30:00",
+      "triage_level": "Low",
+      "visit_type": "Emergency",
+      "age": 58,
+      "chronic_condition": "Diabetes",
+      "predicted_wait_min": 78.8,
+      "delay_probability": 0.85,
+      "impact_score": 0.8,
+      "root_cause": "Low Triage Starvation (Delayed by higher severity cases)",
+      "recommended_action": "Fast-track simple protocol to prevent 70+ min drift.",
+      "total_tests": 0
+    }
+  ],
+  "hourly_patterns": [
+    {
+      "hour": 0,
+      "avg_wait": 51.2,
+      "patient_volume": 300,
+      "severe_delays": 129
+    },
+    {
+      "hour": 1,
+      "avg_wait": 51.1,
+      "patient_volume": 322,
+      "severe_delays": 150
+    },
+    {
+      "hour": 2,
+      "avg_wait": 50.8,
+      "patient_volume": 328,
+      "severe_delays": 148
+    },
+    {
+      "hour": 3,
+      "avg_wait": 49.7,
+      "patient_volume": 311,
+      "severe_delays": 149
+    },
+    {
+      "hour": 4,
+      "avg_wait": 51.7,
+      "patient_volume": 357,
+      "severe_delays": 176
+    },
+    {
+      "hour": 5,
+      "avg_wait": 52.3,
+      "patient_volume": 375,
+      "severe_delays": 168
+    },
+    {
+      "hour": 6,
+      "avg_wait": 51.7,
+      "patient_volume": 361,
+      "severe_delays": 166
+    },
+    {
+      "hour": 7,
+      "avg_wait": 50.6,
+      "patient_volume": 322,
+      "severe_delays": 154
+    },
+    {
+      "hour": 8,
+      "avg_wait": 53.4,
+      "patient_volume": 349,
+      "severe_delays": 174
+    },
+    {
+      "hour": 9,
+      "avg_wait": 52.5,
+      "patient_volume": 322,
+      "severe_delays": 147
+    },
+    {
+      "hour": 10,
+      "avg_wait": 52.0,
+      "patient_volume": 320,
+      "severe_delays": 153
+    },
+    {
+      "hour": 11,
+      "avg_wait": 53.0,
+      "patient_volume": 335,
+      "severe_delays": 149
+    },
+    {
+      "hour": 12,
+      "avg_wait": 51.3,
+      "patient_volume": 300,
+      "severe_delays": 140
+    },
+    {
+      "hour": 13,
+      "avg_wait": 51.3,
+      "patient_volume": 341,
+      "severe_delays": 158
+    },
+    {
+      "hour": 14,
+      "avg_wait": 52.9,
+      "patient_volume": 301,
+      "severe_delays": 148
+    },
+    {
+      "hour": 15,
+      "avg_wait": 53.4,
+      "patient_volume": 341,
+      "severe_delays": 175
+    },
+    {
+      "hour": 16,
+      "avg_wait": 54.1,
+      "patient_volume": 330,
+      "severe_delays": 168
+    },
+    {
+      "hour": 17,
+      "avg_wait": 52.7,
+      "patient_volume": 316,
+      "severe_delays": 158
+    },
+    {
+      "hour": 18,
+      "avg_wait": 51.2,
+      "patient_volume": 349,
+      "severe_delays": 165
+    },
+    {
+      "hour": 19,
+      "avg_wait": 52.6,
+      "patient_volume": 339,
+      "severe_delays": 174
+    },
+    {
+      "hour": 20,
+      "avg_wait": 52.6,
+      "patient_volume": 341,
+      "severe_delays": 168
+    },
+    {
+      "hour": 21,
+      "avg_wait": 52.9,
+      "patient_volume": 344,
+      "severe_delays": 162
+    },
+    {
+      "hour": 22,
+      "avg_wait": 52.2,
+      "patient_volume": 371,
+      "severe_delays": 169
+    },
+    {
+      "hour": 23,
+      "avg_wait": 50.2,
+      "patient_volume": 325,
+      "severe_delays": 143
+    }
+  ],
+  "diagnostic_tat_monitor": [
+    {
+      "test_type": "Blood test",
+      "total_count": 805,
+      "overall_avg_tat": 73.6,
+      "urgent_avg_tat": 78.2,
+      "routine_avg_tat": 72.3,
+      "max_tat": 441.0,
+      "target_sla_minutes": 90,
+      "sla_breach_rate": 30.2
+    },
+    {
+      "test_type": "CT scan",
+      "total_count": 835,
+      "overall_avg_tat": 70.1,
+      "urgent_avg_tat": 71.1,
+      "routine_avg_tat": 69.8,
+      "max_tat": 328.0,
+      "target_sla_minutes": 90,
+      "sla_breach_rate": 25.6
+    },
+    {
+      "test_type": "ECG",
+      "total_count": 818,
+      "overall_avg_tat": 70.6,
+      "urgent_avg_tat": 72.1,
+      "routine_avg_tat": 70.1,
+      "max_tat": 279.0,
+      "target_sla_minutes": 60,
+      "sla_breach_rate": 47.1
+    },
+    {
+      "test_type": "MRI",
+      "total_count": 845,
+      "overall_avg_tat": 68.1,
+      "urgent_avg_tat": 63.7,
+      "routine_avg_tat": 69.3,
+      "max_tat": 418.0,
+      "target_sla_minutes": 90,
+      "sla_breach_rate": 25.8
+    },
+    {
+      "test_type": "Urine test",
+      "total_count": 812,
+      "overall_avg_tat": 66.5,
+      "urgent_avg_tat": 62.0,
+      "routine_avg_tat": 67.8,
+      "max_tat": 337.0,
+      "target_sla_minutes": 60,
+      "sla_breach_rate": 46.6
+    },
+    {
+      "test_type": "X-ray",
+      "total_count": 885,
+      "overall_avg_tat": 69.5,
+      "urgent_avg_tat": 68.3,
+      "routine_avg_tat": 69.8,
+      "max_tat": 336.0,
+      "target_sla_minutes": 90,
+      "sla_breach_rate": 26.9
+    }
+  ]
+}
