@@ -1,0 +1,899 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* =========================================
+     CLINICAL HOSPITAL DESIGN SYSTEM (DEFAULT)
+     ========================================= */
+  --bg-primary: #f0f4f9;              /* Soothing clinical sterile background */
+  --bg-secondary: #ffffff;            /* Pure hospital white */
+  --bg-card: #ffffff;                 /* Clean medical card */
+  --bg-card-hover: #f8fafc;
+  --bg-card-subtle: #f8fafc;
+  --bg-header: rgba(255, 255, 255, 0.95);
+  --bg-nav: #ffffff;
+  --bg-input: #ffffff;
+  --bg-table-header: #f8fafc;
+  --bg-table-stripe: #fafbfc;
+  --bg-table-hover: #f1f5f9;
+
+  --border-subtle: #e2e8f0;           /* Clean medical borders */
+  --border-medium: #cbd5e1;
+  --border-focus: #0284c7;
+
+  /* Clinical Text Contrast */
+  --text-main: #0f2942;               /* Authoritative deep clinical navy */
+  --text-heading: #091e30;            /* Primary dark clinical text */
+  --text-muted: #475569;              /* Professional clinical slate */
+  --text-dim: #64748b;                /* Secondary indicator label */
+
+  /* Hospital & Medical Identity Accents */
+  --hospital-teal: #0d9488;           /* Surgeon scrub teal */
+  --hospital-teal-light: #ccfbf1;
+  --hospital-blue: #0284c7;           /* Stethoscope / Clinical blue */
+  --hospital-blue-light: #e0f2fe;
+  --hospital-navy: #0f2942;           /* Command center navy */
+  
+  --accent-cyan: #0284c7;             /* Medical Blue */
+  --accent-teal: #0d9488;             /* Scrub Teal */
+  --accent-blue: #2563eb;             /* Hospital Blue */
+  --accent-indigo: #4f46e5;
+
+  /* Clinical Triage Status Colors */
+  --status-critical: #dc2626;         /* Emergency Code Red */
+  --status-critical-bg: #fef2f2;
+  --status-critical-border: #fecaca;
+  --status-warning: #d97706;          /* Triage Amber Alert */
+  --status-warning-bg: #fffbeb;
+  --status-warning-border: #fde68a;
+  --status-success: #059669;          /* Stable / Nominal Clinical Green */
+  --status-success-bg: #ecfdf5;
+  --status-success-border: #a7f3d0;
+  --status-info: #0284c7;
+  --status-info-bg: #f0f9ff;
+  --status-info-border: #bae6fd;
+
+  /* Medical Elevations & Shadows */
+  --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 14px -2px rgba(15, 41, 66, 0.08), 0 2px 4px -1px rgba(15, 41, 66, 0.04);
+  --shadow-lg: 0 10px 25px -4px rgba(15, 41, 66, 0.1), 0 4px 8px -2px rgba(15, 41, 66, 0.05);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(15, 41, 66, 0.06);
+
+  --glow-cyan: 0 0 15px rgba(2, 132, 199, 0.2);
+  --glow-crimson: 0 0 15px rgba(220, 38, 38, 0.2);
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* =========================================
+   ICU NIGHT COMMAND CENTER MODE
+   ========================================= */
+[data-theme="dark"] {
+  --bg-primary: #0a1120;
+  --bg-secondary: #0f192d;
+  --bg-card: #132238;
+  --bg-card-hover: #1a2c47;
+  --bg-card-subtle: #0d1726;
+  --bg-header: rgba(15, 25, 45, 0.95);
+  --bg-nav: #0f192d;
+  --bg-input: #0a1120;
+  --bg-table-header: #101c30;
+  --bg-table-stripe: rgba(255, 255, 255, 0.02);
+  --bg-table-hover: rgba(255, 255, 255, 0.05);
+
+  --border-subtle: rgba(255, 255, 255, 0.09);
+  --border-medium: rgba(255, 255, 255, 0.16);
+  --border-focus: #38bdf8;
+
+  --text-main: #f1f5f9;
+  --text-heading: #ffffff;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+
+  --hospital-teal: #14b8a6;
+  --hospital-teal-light: rgba(20, 184, 166, 0.15);
+  --hospital-blue: #38bdf8;
+  --hospital-blue-light: rgba(56, 189, 248, 0.15);
+  --hospital-navy: #1e3a5f;
+
+  --accent-cyan: #38bdf8;
+  --accent-teal: #14b8a6;
+  --accent-blue: #60a5fa;
+
+  --status-critical: #f43f5e;
+  --status-critical-bg: rgba(244, 63, 94, 0.14);
+  --status-critical-border: rgba(244, 63, 94, 0.35);
+  --status-warning: #f59e0b;
+  --status-warning-bg: rgba(245, 158, 11, 0.14);
+  --status-warning-border: rgba(245, 158, 11, 0.35);
+  --status-success: #10b981;
+  --status-success-bg: rgba(16, 185, 129, 0.14);
+  --status-success-border: rgba(16, 185, 129, 0.35);
+  --status-info: #0ea5e9;
+  --status-info-bg: rgba(14, 165, 233, 0.14);
+  --status-info-border: rgba(14, 165, 233, 0.35);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  line-height: 1.5;
+  background-image: 
+    radial-gradient(circle at 15% 10%, rgba(2, 132, 199, 0.05) 0%, transparent 45%),
+    radial-gradient(circle at 85% 90%, rgba(13, 148, 136, 0.05) 0%, transparent 45%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Clinical Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan);
+}
+
+/* =========================================
+   TOP APPLICATION HEADER & HOSPITAL IDENTITY
+   ========================================= */
+header.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: var(--bg-header);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 0.85rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Medical Cross + ECG Heartbeat Emblem */
+.brand-icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #0284c7, #0d9488);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.brand-icon svg {
+  width: 26px;
+  height: 26px;
+  stroke: #ffffff;
+  stroke-width: 2.2;
+}
+
+.brand-title h1 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-heading);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.brand-title h1 .brand-dot {
+  color: var(--accent-cyan);
+}
+
+.brand-title p {
+  font-size: 0.76rem;
+  color: var(--hospital-teal);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.header-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  padding: 0.35rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.badge-cyan {
+  background: var(--status-info-bg);
+  color: var(--status-info);
+  border-color: var(--status-info-border);
+}
+
+.badge-emerald {
+  background: var(--status-success-bg);
+  color: var(--status-success);
+  border-color: var(--status-success-border);
+}
+
+.badge-amber {
+  background: var(--status-warning-bg);
+  color: var(--status-warning);
+  border-color: var(--status-warning-border);
+}
+
+.badge-red {
+  background: var(--status-critical-bg);
+  color: var(--status-critical);
+  border-color: var(--status-critical-border);
+}
+
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  background-color: var(--status-success);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--status-success);
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+/* Theme Switcher Button */
+.theme-toggle-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-medium);
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   NAVIGATION TABS (CLINICAL TABS)
+   ========================================= */
+.nav-tabs {
+  display: flex;
+  background: var(--bg-secondary);
+  padding: 0.25rem 2rem;
+  border-bottom: 1px solid var(--border-subtle);
+  gap: 0.5rem;
+  overflow-x: auto;
+  box-shadow: var(--shadow-sm);
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  font-weight: 600;
+  padding: 0.75rem 1.15rem;
+  border-radius: 6px 6px 0 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.tab-btn:hover {
+  color: var(--text-main);
+  background: var(--bg-card-hover);
+}
+
+.tab-btn.active {
+  color: var(--accent-cyan);
+  border-bottom-color: var(--accent-cyan);
+  background: var(--status-info-bg);
+  font-weight: 700;
+}
+
+/* =========================================
+   MAIN CONTAINER & DASHBOARD LAYOUT
+   ========================================= */
+main.app-container {
+  max-width: 1540px;
+  margin: 0 auto;
+  padding: 1.75rem 2rem 3rem 2rem;
+}
+
+/* =========================================
+   CLINICAL KPI RIBBON
+   ========================================= */
+.kpi-ribbon {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.15rem;
+  margin-bottom: 1.75rem;
+}
+
+.kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.25rem 1.35rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-medium);
+}
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+}
+
+.kpi-card.cyan::before { background: var(--accent-cyan); }
+.kpi-card.emerald::before { background: var(--status-success); }
+.kpi-card.amber::before { background: var(--status-warning); }
+.kpi-card.crimson::before { background: var(--status-critical); }
+.kpi-card.indigo::before { background: var(--hospital-teal); }
+
+.kpi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.kpi-title {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.kpi-icon {
+  color: var(--text-dim);
+  width: 18px;
+  height: 18px;
+}
+
+.kpi-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-heading);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
+}
+
+.kpi-footer {
+  font-size: 0.77rem;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.kpi-footer span.highlight {
+  font-weight: 700;
+  color: var(--accent-cyan);
+}
+
+/* =========================================
+   CRITICAL EMERGENCY DISPATCH BANNER
+   ========================================= */
+.urgent-banner {
+  background: var(--status-critical-bg);
+  border: 1px solid var(--status-critical-border);
+  border-left: 5px solid var(--status-critical);
+  border-radius: 12px;
+  padding: 1.15rem 1.6rem;
+  margin-bottom: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.urgent-content {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.urgent-badge {
+  background: var(--status-critical);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.73rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+}
+
+.urgent-text strong {
+  color: var(--text-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.urgent-text p {
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  margin-top: 0.15rem;
+}
+
+/* =========================================
+   CLINICAL PANELS & CARDS
+   ========================================= */
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 1.6rem;
+  margin-bottom: 1.75rem;
+  box-shadow: var(--shadow-card);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.35rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.panel-title h2 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.panel-title p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+/* Form inputs & search */
+.clinical-input,
+.clinical-select {
+  background: var(--bg-input);
+  border: 1px solid var(--border-medium);
+  color: var(--text-main);
+  padding: 0.48rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  outline: none;
+  font-family: var(--font-sans);
+  transition: all 0.2s ease;
+}
+
+.clinical-input:focus,
+.clinical-select:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 3px var(--status-info-bg);
+}
+
+/* =========================================
+   HOSPITAL DEPARTMENT STATUS MATRIX
+   ========================================= */
+.dept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+.dept-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.3rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+}
+
+.dept-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-cyan);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.dept-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.9rem;
+}
+
+.dept-name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-heading);
+}
+
+.dept-type {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  margin-top: 0.15rem;
+}
+
+.dept-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  background: var(--bg-card-subtle);
+  padding: 0.85rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+}
+
+.stat-item .stat-label {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.stat-item .stat-val {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-top: 0.15rem;
+}
+
+.stat-item .stat-val.delayed {
+  color: var(--status-critical);
+}
+
+.progress-container {
+  margin-top: 0.6rem;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+  font-weight: 500;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: var(--border-subtle);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+/* =========================================
+   CLINICAL INFORMATION TABLES
+   ========================================= */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+}
+
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  text-align: left;
+  background: var(--bg-card);
+}
+
+table.data-table th {
+  background: var(--bg-table-header);
+  padding: 0.9rem 1rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+table.data-table td {
+  padding: 0.95rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  vertical-align: middle;
+}
+
+table.data-table tbody tr:nth-child(even) {
+  background: var(--bg-table-stripe);
+}
+
+table.data-table tr:hover td {
+  background: var(--bg-table-hover);
+}
+
+/* Status & Triage Badges */
+.badge-tag {
+  font-size: 0.72rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.tag-critical { 
+  background: var(--status-critical-bg); 
+  color: var(--status-critical); 
+  border: 1px solid var(--status-critical-border); 
+}
+.tag-high { 
+  background: var(--status-warning-bg); 
+  color: var(--status-warning); 
+  border: 1px solid var(--status-warning-border); 
+}
+.tag-medium { 
+  background: var(--status-info-bg); 
+  color: var(--status-info); 
+  border: 1px solid var(--status-info-border); 
+}
+.tag-low { 
+  background: var(--status-success-bg); 
+  color: var(--status-success); 
+  border: 1px solid var(--status-success-border); 
+}
+
+/* =========================================
+   FEATURE ATTRIBUTIONS WATERFALL BARS
+   ========================================= */
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.feature-row {
+  display: grid;
+  grid-template-columns: 240px 1fr 90px;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.83rem;
+}
+
+.feat-name {
+  color: var(--text-heading);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.feat-bar-container {
+  height: 10px;
+  background: var(--border-subtle);
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.feat-bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  background: linear-gradient(90deg, var(--hospital-teal), var(--accent-cyan));
+}
+
+.feat-bar-fill.negative {
+  background: linear-gradient(90deg, var(--status-success), #15803d);
+}
+
+.feat-val {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+}
+
+/* =========================================
+   OPERATIONAL SIMULATOR WORKSTATION
+   ========================================= */
+.simulator-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 2rem;
+}
+
+.slider-group {
+  margin-bottom: 1.5rem;
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.84rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-heading);
+}
+
+.slider-val {
+  font-weight: 700;
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--hospital-teal);
+  background: var(--border-subtle);
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+}
+
+.sim-output-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 1.85rem;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .simulator-grid { grid-template-columns: 1fr; }
+  .grid-2col { grid-template-columns: 1fr; }
+}
+
+/* =========================================
+   SVG CHARTS & GRAPHICS
+   ========================================= */
+.chart-container {
+  width: 100%;
+  height: 240px;
+  position: relative;
+}
+
+svg.chart-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.axis-line {
+  stroke: var(--border-subtle);
+  stroke-dasharray: 4;
+}
+
+.chart-label {
+  fill: var(--text-dim);
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+/* =========================================
+   BUTTONS & CALL TO ACTIONS
+   ========================================= */
+.btn-action {
+  background: linear-gradient(135deg, #0284c7, #0d9488);
+  color: #ffffff;
+  border: none;
+  padding: 0.55rem 1.15rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-action:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+  transform: translateY(-1px);
+}
